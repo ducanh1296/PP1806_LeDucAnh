@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Grocery;
 
 class CreateGroceriesTable extends Migration
 {
@@ -11,13 +12,16 @@ class CreateGroceriesTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('groceries', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
-        });
-    }
+    public function store(Request $request)
+     {
+            $grocery = new Grocery();
+            $grocery->name = $request->name;
+            $grocery->type = $request->type;
+            $grocery->price = $request->price;
+
+            $grocery->save();
+            return response()->json(['success'=>'Data is successfully added']);
+     }
 
     /**
      * Reverse the migrations.
